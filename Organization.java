@@ -54,24 +54,24 @@ public class Organization {
     }
     // #2 donatorList:
     void insertDonator(Donator don){
-
+        // to be implemented...
     }
     void removeDonator(Donator don){
-        
+        // to be implemented...
     }
     void listDonators(){
-        
+        // to be implemented...
     }
 
     // #3 benefiaciaryList:
     void insertBeneficiary(Beneficiary ben){
-
+        // to be implemented...
     }
     void removeBeneficiary(Beneficiary ben){
-        
+        // to be implemented...
     }
     void listBeneficiary(){
-
+        // to be implemented...
     }
 
     // (#4) requestDonationList:
