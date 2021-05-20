@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class RequestDonationList extends TheEntityDoesntExistInCompanyListException{
+public class RequestDonationList extends TheEntityDoesntExistInCompanyListException{ // <====== HERE!!! (NASOS)
     private ArrayList<RequestDonation> rdEntities = new ArrayList<>();
 
     /** This method returns the number of RequestDonation in the rdEntities */
@@ -18,11 +18,11 @@ public class RequestDonationList extends TheEntityDoesntExistInCompanyListExcept
      * If so the requestSonation is added in the rdEtities list.
      * return false if a problem occurs
      */
-    public boolean add(RequestDonation requestDonation, RequestDonationList companyList) 
+    public boolean add(RequestDonation requestDonation, RequestDonationList companyList) // <====== HERE!!! (NASOS)
     throws TheEntityDoesntExistInCompanyListException{
         boolean flag = true;
         
-        // check if the requestDonation exists in company's List
+        // check if the requestDonation exists in company's List <====== HERE!!! (NASOS)
         int i = 0;
         boolean exist = false;
         while(true){
