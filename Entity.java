@@ -25,7 +25,8 @@ abstract class Entity {
   */
 
   // return this.name + " (ID: " + this.ID + " )" + "\n" + this.description
-  public String getEntityInfo(){return "ID:" +this.ID + " "+ this.name + this.description;} // 66 lazania hdjkfdksfdsl
+  public String getEntityInfo(){return "(ID: " + this.ID + ")" +"\n" + "(name: " + this.name + ")" + 
+  "(description: " + this.description +")";} // 66 lazania hdjkfdksfdsl
   abstract public String getDetails(); // Εφόσον λέει απλή δήλωση πρέπει να είναι abstract (Μην ξεχάσεις στο τέλος το ;)
   
   @Override
