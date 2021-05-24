@@ -3,11 +3,3 @@ public class TheEntityDoesntExistInCompanyListException extends OurExceptions{
         super("The Entity you try to add is not supported by the company!");
     }
 }
-
-/*
-  public class EntityDoesntExist extends OurExceptions{
-    public EntityDoesntExist(){
-        super("The Entity you try to add is not supported by the Organization!");
-    }
-}
-*/
