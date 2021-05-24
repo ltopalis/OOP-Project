@@ -1,5 +1,5 @@
 public class Material extends Entity{
-  private double level1; // private
+  private double level1;
   private double level2;
   private double level3;
  
@@ -11,8 +11,12 @@ public class Material extends Entity{
     this.level2 = level2;
     this.level3 = level3;
  }
+
+ public double getLevel1() {return level1;}
+ public double getLevel2() {return level2;}
+ public double getLevel3() {return level3;}
  
-  public String getDetails(){return "Είναι τύπου Material με levels: " + this.level1 + " " + this.level2 + " " + this.level3;} // Να επιστρέφει και ότι είναι material
+  public String getDetails(){return "Είναι τύπου Material με levels: " + this.level1 + " " + this.level2 + " " + this.level3;}
  
 
 
