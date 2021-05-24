@@ -119,12 +119,12 @@ public class Organization {
             if ((beneficiary.getPhone() == beneficiaryList.get(i).getPhone()) && (beneficiary.getName() == beneficiaryList.get(i).getName())) {throw new ElementAlreadyExists();}
         }
     }
-    // #4 currentDonations:
+    // #4 currentDonations: (wrapper methods)
     public void addDonation(RequestDonation rd){
-        
+        // to be implemented
     }
     public void removeDonation(RequestDonation rd){
-        
+        // to be implemented
     }
     
 } // end Organization class
