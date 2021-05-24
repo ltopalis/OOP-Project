@@ -1,7 +1,11 @@
 import java.util.ArrayList;
 
-public class RequestDonationList extends TheEntityDoesntExistInCompanyListException{ // <====== HERE!!! (NASOS)
+public class RequestDonationList extends OurExceptions{
     private ArrayList<RequestDonation> rdEntities = new ArrayList<>();
+
+    public ArrayList<RequestDonation> getArrayList(){
+        return rdEntities;
+    }
 
     /** This method returns the number of RequestDonation in the rdEntities */
     public int listSize(){
@@ -12,41 +16,47 @@ public class RequestDonationList extends TheEntityDoesntExistInCompanyListExcept
         return rdEntities.get(elem).getEntity().getID();
     }
 
+    /** 
+     * Returns the Quantity of an element in rdEntities using the ID of the Entity 
+     * If the element doesn't exist, the method returns -1.0
+     * */
+    public double getQuantity(int ID){
+        for(int i = 0; i<rdEntities.size(); i++)
+            if(rdEntities.get(i).getEntity().getID() == ID)
+                return rdEntities.get(i).getQuantity();
+        
+        return -1.0; // if the ID isn't exist
+    }
 
     /**
      *  Adds a requestDonation and check if it is supported by a company. 
      * If so the requestSonation is added in the rdEtities list.
      * return false if a problem occurs
      */
-    public boolean add(RequestDonation requestDonation, RequestDonationList companyList) // <====== HERE!!! (NASOS)
-    throws TheEntityDoesntExistInCompanyListException{
+    public boolean add(RequestDonation requestDonation, Organization organization, Beneficiary ben)
+    throws TheEntityDoesntExistInCompanyListException {
         boolean flag = true;
-        
-        // check if the requestDonation exists in company's List <====== HERE!!! (NASOS)
-        int i = 0;
-        boolean exist = false;
-        while(true){
-            if (requestDonation.getEntity().getID() == companyList.get(i)) {
-                exist = true;
-                break;
-            }
-            if (i < companyList.listSize()) throw new TheEntityDoesntExistInCompanyListException();
-            i++;
-        }
-        if(!exist) return false;
 
-        // check if the requestDonation already exists in List
-        sameID: if(!rdEntities.isEmpty()){
-            i = 0;
-            while(i<rdEntities.size()){
-                if(requestDonation.getEntity().getID() ==
-                    rdEntities.get(i).getEntity().getID()){ // same IDs
-                    rdEntities.get(i).addQuantity(requestDonation.getQuantity());
-                    flag = !flag; // if there is an Entity with the same ID, it shouldn't be added in List
-                    break sameID; // breaks the outter if when we find an entity with the same ID
+        try{
+            // check if entity exists in organiZation's entityList 
+            organization.checkEntityExists(requestDonation.getEntity());
+            // check if the requestDonation already exists in List
+            int i = 0;
+            sameID: if(!rdEntities.isEmpty()){
+                i = 0;
+                while(i<rdEntities.size()){
+                    if(requestDonation.getEntity().getID() ==
+                        rdEntities.get(i).getEntity().getID()){ // same IDs
+                        rdEntities.get(i).addQuantity(requestDonation.getQuantity());
+                        flag = !flag; // if there is an Entity with the same ID, it shouldn't be added in List
+                        break sameID; // breaks the outter if when we find an entity with the same ID
+                    }
+                    i++;
                 }
-                i++;
             }
+        } catch(TheEntityDoesntExistInCompanyListException e){
+            System.err.println(e);
+            return false;
         }
         
         // Add an Entity only if it doesn't exist already
@@ -71,7 +81,7 @@ public class RequestDonationList extends TheEntityDoesntExistInCompanyListExcept
     }
 
     /** Removes an RequestDonation from the list according to the ID of the Entity
-     * returns false if a problem occurs
+     *  returns false if a problem occurs
      */
     public boolean remove(Entity elem) throws ThereIsNotSuchElementException{
         for(int i=0; i<rdEntities.size(); i++)
@@ -88,9 +98,9 @@ public class RequestDonationList extends TheEntityDoesntExistInCompanyListExcept
 
 
     /** Modify the quantity of an Entity from the list according to its position in list
-     * returns false if a problem occurs
+     *  returns false if a problem occurs
      */
-    public boolean modify(int position, double quantity){
+    public boolean modify(int position, double quantity, Organization org, Beneficiary ben){
         try{
             rdEntities.get(position).setQuantity(quantity);
             return true;
@@ -101,9 +111,9 @@ public class RequestDonationList extends TheEntityDoesntExistInCompanyListExcept
     }
 
     /** Modify the quantity of an Entity from the list according to the ID of the Entity
-     * returns false if a problem occurs
+     *  returns false if a problem occurs
      */
-    public boolean modify(Entity entity, double quantity) throws ThereIsNotSuchElementException{
+    public boolean modify(Entity entity, double quantity, Organization org, Beneficiary ben) throws ThereIsNotSuchElementException{
         try{
             for(int i=0; i<rdEntities.size(); i++)
                 if(entity.getID() == rdEntities.get(i).getEntity().getID()){
