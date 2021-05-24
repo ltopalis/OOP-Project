@@ -14,6 +14,5 @@ abstract class User{
     public void setPhone(String phone) {this.phone = phone;}
     
     public String getPhone() {return phone;}
-
-// ftiaxnw mia to string na epistrefei ta get
+    public String toString() {return "Ονομα :"+ this.name + "Τηλεφωνο :" + this.phone ;}
 }
