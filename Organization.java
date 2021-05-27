@@ -121,7 +121,7 @@ public class Organization {
     }
     // #4 currentDonations: (wrapper methods)
     public void addDonation(RequestDonation rd){
-        this.currentDonations.add(rd, this);
+        this.currentDonations.add(rd, this, null);
     }
     public void removeDonation(RequestDonation rd){
         this.currentDonations.remove(rd.getEntity());
