@@ -21,7 +21,9 @@ public class Organization {
         this.admin = (Admin)user;
     }
     // METHODS:
-
+    public String getName(){
+        return this.name;
+    }
     // Admin:
     public void setAdmin(Admin adm){
         this.admin = adm; // change organization's Admin 
