@@ -69,6 +69,9 @@ public class Organization {
             if (ent.getID() == entityList.get(i).getID()) {throw new ElementAlreadyExistsException();} // check each one of the entityList elements
         }
     }
+    public ArrayList<Entity> getEntityList(){
+        return this.entityList;
+    }
     // #2 donatorList:
     void insertDonator(User don){
         try
@@ -95,6 +98,9 @@ public class Organization {
             if ((donator.getPhone() == donatorList.get(i).getPhone()) && (donator.getName() == donatorList.get(i).getName())) {throw new ElementAlreadyExistsException();} // check each one of the entityList elements
         }
     }
+    public ArrayList<Donator> getDonatorList(){
+        return this.donatorList;
+    }
 
     // #3 benefiaciaryList:
     void insertBeneficiary(User ben){
@@ -119,6 +125,9 @@ public class Organization {
             if ((beneficiary.getPhone() == beneficiaryList.get(i).getPhone()) && (beneficiary.getName() == beneficiaryList.get(i).getName())) {throw new ElementAlreadyExistsException();}
         }
     }
+    public ArrayList<Beneficiary> getBeneficiaryList(){
+        return this.beneficiaryList;
+    }
     // #4 currentDonations: (wrapper methods)
     public boolean addDonation(RequestDonation rd){
         return this.currentDonations.add(rd, this, null);
@@ -128,5 +137,8 @@ public class Organization {
     }
     public int sizeDonation(){
         return this.currentDonations.listSize();
+    }
+    public RequestDonationList getCurrentDonations(){
+        return this.currentDonations
     }
 } // end Organization class
