@@ -19,4 +19,8 @@ public class Donator extends User{
     public Offers getOffersList(){
         return offersList;
     }
+    public boolean commmit(Organization org){
+        this.offersList.commit(org);
+    }
+}
 }
