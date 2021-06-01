@@ -90,7 +90,7 @@ public class Organization {
     void listDonators(){
         System.out.println("Donator List:");
         for(int i = 0; i < donatorList.size(); i++){
-            System.out.println(donatorList.get(i).getName());
+            System.out.println(i + ". " + donatorList.get(i).getName());
         }
     }
     public void checkDonatorExists(User donator) throws ElementAlreadyExistsException {
@@ -118,7 +118,7 @@ public class Organization {
         beneficiaryList.remove((Beneficiary)ben);
     }
     void listBeneficiaries(){
-        // BENEFICIARY CLASS PROBLEM
+        System.out.println(i+ ". " + this.beneficaryList.get(i).getName());
     }
     public void checkBeneficiaryExists(User beneficiary) throws ElementAlreadyExistsException {
         for (int i = 0; i < beneficiaryList.size(); i++){
