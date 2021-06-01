@@ -131,6 +131,7 @@ public class Organization {
     // #4 currentDonations: (wrapper methods)
     public boolean addDonation(RequestDonation rd){
         return this.currentDonations.add(rd, this, null);
+        // NOTICE: quantity automatically rises, if given Entity, already exists (see RequestDonationList.add >> Requests.addQuantity)
     }
     public void removeDonation(RequestDonation rd){
         this.currentDonations.remove(rd.getEntity());
