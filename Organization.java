@@ -135,11 +135,26 @@ public class Organization {
     }
     // #4 currentDonations: (wrapper methods)
     public boolean addDonation(RequestDonation rd){
-        return this.currentDonations.add(rd, this, null);
+        try
+        {
+            return this.currentDonations.add(rd, this, null);
+        }
+        catch (TheEntityDoesntExistInCompanyListException ex)
+        {
+            System.err.println(ex);
+        }
         // NOTICE: quantity automatically rises, if given Entity, already exists (see RequestDonationList.add >> Requests.addQuantity)
+        return true;
     }
     public void removeDonation(RequestDonation rd){
-        this.currentDonations.remove(rd.getEntity());
+        try
+        {
+            this.currentDonations.remove(rd.getEntity());
+        }
+        catch (ThereIsNotSuchElementException hi)
+        {
+            System.err.println(hi);
+        }
     }
     public int sizeDonation(){
         return this.currentDonations.listSize();
