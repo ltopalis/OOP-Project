@@ -49,7 +49,7 @@ public class Main {
                     System.out.println("Γεία σας.");
                     System.out.print("Δώστε το τηλέφωνο σας (Για τερματισμό από το πρόγραμμα πληκρολογήστε e): ");
                     phoneNumber = sc.next();
-                    if(phoneNumber.equals("e")) System.exit(0);
+                    if(phoneNumber.equalsIgnoreCase("e")) System.exit(0);
                     if (!phoneNumber.matches("[0-9]+")) throw new WrongInput(); // Ελέγχει αν ο αριθμός τηλεφώνου περιέχει μόνο αριθμούς
                     user = organization.checkAPhoneNumber(phoneNumber);
 
@@ -92,7 +92,6 @@ public class Main {
                         System.out.println(k);
                     }
                 } catch (WrongInput e) {
-                    // TODO Auto-generated catch block
                     System.out.println(e);
                 }
             }
