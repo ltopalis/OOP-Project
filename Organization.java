@@ -142,6 +142,6 @@ public class Organization {
         return this.currentDonations.listSize();
     }
     public RequestDonationList getCurrentDonations(){
-        return this.currentDonations
+        return this.currentDonations;
     }
 } // end Organization class
