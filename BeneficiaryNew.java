@@ -21,10 +21,24 @@ public class Beneficiary extends User{
     
     // #1 receivedList: (from class RequestDonationList)
     public void addReceived(RequestDonation rd, Organization org){ 
-        this.receivedList.add(rd, org, null); // adds a RequestDonation in list
+        try
+        {
+            this.receivedList.add(rd, org, null);
+        }
+        catch (TheEntityDoesntExistInCompanyListException e)
+        {
+           System.err.println(e);
+        } // adds a RequestDonation in list
     }
     public void removeReceived(RequestDonation rd){
-        this.receivedList.remove(rd.getEntity()); // removes RequestDonation from list
+        try
+        {
+            this.receivedList.remove(rd.getEntity());
+        }
+        catch (ThereIsNotSuchElementException e)
+        {
+            System.out.println(e);
+        } // removes RequestDonation from list
     }
     public RequestDonationList getReceivedList(){
       return receivedList;
@@ -33,10 +47,24 @@ public class Beneficiary extends User{
     
     // #2 requestsList:
     public void addRequest(RequestDonation rd, Organization org){
-        this.requestsList.add(rd, org, null); // adds a RequestDonation in list
+        try
+        {
+            this.requestsList.add(rd, org, null);
+        }
+        catch (TheEntityDoesntExistInCompanyListException e)
+        {
+            System.err.println(e);
+        } // adds a RequestDonation in list
     }
     public void removeRequest(RequestDonation rd){
-        this.requestsList.remove(rd.getEntity()); // removes RequestDonation from list
+        try
+        {
+            this.requestsList.remove(rd.getEntity());
+        }
+        catch (ThereIsNotSuchElementException e)
+        {
+            System.err.println(e);
+        } // removes RequestDonation from list
     }
     public Requests getRequestsList(){
     return requestsList;
