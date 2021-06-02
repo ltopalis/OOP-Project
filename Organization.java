@@ -120,7 +120,7 @@ public class Organization {
         beneficiaryList.remove((Beneficiary)ben);
     }
     void listBeneficiaries(){
-        System.out.println(i+ ". " + this.beneficaryList.get(i).getName());
+        System.out.println(i+ ". " + this.beneficiaryList.get(i).getName());
     }
     public void checkBeneficiaryExists(User beneficiary) throws EntityAlreadyExistsException {
         for (int i = 0; i < beneficiaryList.size(); i++){
