@@ -16,7 +16,7 @@ public class Organization {
         this.name = name;
         this.admin = admin;
     }
-     public Organization(String name, User user){
+    public Organization(String name, User user){
         this.name = name;
         this.admin = (Admin)user;
     }
@@ -52,7 +52,7 @@ public class Organization {
         if ((this.admin).getisAdmin() == false) {return;} // abbort
         entityList.remove(ent);
     }
-    void listEntities(){
+    public void listEntities(){
        System.out.println("Service List:");
        for (int i = 0; i < entityList.size(); i++){
            if (entityList.get(i) instanceof Service){
@@ -75,7 +75,7 @@ public class Organization {
         return this.entityList;
     }
     // #2 donatorList:
-    void insertDonator(User don){
+    public void insertDonator(User don){
         try
         {
             this.checkDonatorExists(don); // HANDLED
@@ -86,10 +86,10 @@ public class Organization {
         }
         donatorList.add((Donator)don);
     }
-    void removeDonator(User don){
+    public void removeDonator(User don){
         donatorList.remove((Donator)don);
     }
-    void listDonators(){
+    public void listDonators(){
         System.out.println("Donator List:");
         for(int i = 0; i < donatorList.size(); i++){
             System.out.println(i + ". " + donatorList.get(i).getName());
@@ -105,7 +105,7 @@ public class Organization {
     }
 
     // #3 benefiaciaryList:
-    void insertBeneficiary(User ben){
+    public void insertBeneficiary(User ben){
         try
         {
             this.checkBeneficiaryExists(ben); // HANDLED
@@ -116,11 +116,14 @@ public class Organization {
         }
         beneficiaryList.add((Beneficiary)ben);
     }
-    void removeBeneficiary(User ben){
+    public void removeBeneficiary(User ben){
         beneficiaryList.remove((Beneficiary)ben);
     }
-    void listBeneficiaries(){
-        System.out.println(i+ ". " + this.beneficiaryList.get(i).getName());
+    public void listBeneficiaries(){
+        System.out.println("Beneficiary List:");
+        for(int i = 0; i < beneficiaryList.size(); i++){
+            System.out.println(i+ ". " + this.beneficiaryList.get(i).getName());
+        }
     }
     public void checkBeneficiaryExists(User beneficiary) throws EntityAlreadyExistsException {
         for (int i = 0; i < beneficiaryList.size(); i++){
