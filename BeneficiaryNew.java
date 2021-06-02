@@ -20,25 +20,11 @@ public class Beneficiary extends User{
     // WRAPPER METHODS FOR LIST MANAGEMENT:
     
     // #1 receivedList: (from class RequestDonationList)
-    public void addReceived(RequestDonation rd, Organization org){ 
-        try
-        {
-            this.receivedList.add(rd, org, null);
-        }
-        catch (TheEntityDoesntExistInCompanyListException e)
-        {
-           System.err.println(e);
-        } // adds a RequestDonation in list
+    public void addReceived(RequestDonation rd, Organization org){
+            this.receivedList.add(rd, org, null); // adds a RequestDonation in list
     }
     public void removeReceived(RequestDonation rd){
-        try
-        {
-            this.receivedList.remove(rd.getEntity());
-        }
-        catch (ThereIsNotSuchElementException e)
-        {
-            System.out.println(e);
-        } // removes RequestDonation from list
+            this.receivedList.remove(rd.getEntity());  // removes RequestDonation from list
     }
     public RequestDonationList getReceivedList(){
       return receivedList;
@@ -47,23 +33,11 @@ public class Beneficiary extends User{
     
     // #2 requestsList:
     public void addRequest(RequestDonation rd, Organization org){
-        try
-        {
             this.requestsList.add(rd, org, null);
-        }
-        catch (TheEntityDoesntExistInCompanyListException e)
-        {
-            System.err.println(e);
         } // adds a RequestDonation in list
     }
     public void removeRequest(RequestDonation rd){
-        try
-        {
             this.requestsList.remove(rd.getEntity());
-        }
-        catch (ThereIsNotSuchElementException e)
-        {
-            System.err.println(e);
         } // removes RequestDonation from list
     }
     public Requests getRequestsList(){
