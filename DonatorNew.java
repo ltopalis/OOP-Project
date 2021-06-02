@@ -11,10 +11,24 @@ public class Donator extends User{
     
     // #1 offersList (from class Offers)
     public void addOffer(RequestDonation rd, Organization org){ 
-        this.offersList.add(rd, org, null); // adds a RequestDonation in list
+        try
+        {
+            this.offersList.add(rd, org, null);
+        }
+        catch (TheEntityDoesntExistInCompanyListException e)
+        {
+            System.err.println(e);
+        } // adds a RequestDonation in list
     }
     public void removeOffer(RequestDonation rd){
-        this.offersList.remove(rd.getEntity()); // removes RequestDonation from list
+        try
+        {
+            this.offersList.remove(rd.getEntity());
+        }
+        catch (ThereIsNotSuchElementException e)
+        {
+            System.err.println(e);
+        } // removes RequestDonation from list
     }
     public Offers getOffersList(){
         return offersList;
@@ -24,4 +38,3 @@ public class Donator extends User{
         return true;
     }
 }
-
