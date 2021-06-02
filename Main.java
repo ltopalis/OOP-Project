@@ -43,12 +43,14 @@ public class Main {
             organization.insertDonator(donator);
             String phoneNumber = "";
             User user;
-
+            
             while(true) {
                 try {
                     System.out.println("Γεία σας.");
-                    System.out.print("Δώστε το τηλέφωνο σας: ");
+                    System.out.print("Δώστε το τηλέφωνο σας (Για τερματισμό από το πρόγραμμα πληκρολογήστε e): ");
                     phoneNumber = sc.next();
+                    if(phoneNumber.equals("e")) System.exit(0);
+                    if (!phoneNumber.matches("[0-9]+")) throw new WrongInput(); // Ελέγχει αν ο αριθμός τηλεφώνου περιέχει μόνο αριθμούς
                     user = organization.checkAPhoneNumber(phoneNumber);
 
                     menu.generalMenu(sc, user, organization);
@@ -89,6 +91,9 @@ public class Main {
                     }catch (InputMismatchException k){
                         System.out.println(k);
                     }
+                } catch (WrongInput e) {
+                    // TODO Auto-generated catch block
+                    System.out.println(e);
                 }
             }
 
