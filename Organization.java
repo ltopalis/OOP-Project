@@ -41,7 +41,7 @@ public class Organization {
         {
             this.checkEntityExists(ent); // HANDLED
         }
-        catch (ElementAlreadyExistsException eae)
+        catch (EntityAlreadyExistsException eae)
         {
             System.err.println(eae);
         }
@@ -66,9 +66,9 @@ public class Organization {
            }
        }
     }
-    public void checkEntityExists(Entity ent) throws ElementAlreadyExistsException { // NEW  
+    public void checkEntityExists(Entity ent) throws EntityAlreadyExistsException { // NEW  
         for (int i = 0; i < entityList.size(); i++){
-            if (ent.getID() == entityList.get(i).getID()) {throw new ElementAlreadyExistsException();} // check each one of the entityList elements
+            if (ent.getID() == entityList.get(i).getID()) {throw new EntityAlreadyExistsException();} // check each one of the entityList elements
         }
     }
     public ArrayList<Entity> getEntityList(){
@@ -80,7 +80,7 @@ public class Organization {
         {
             this.checkDonatorExists(don); // HANDLED
         }
-        catch (ElementAlreadyExistsException eae)
+        catch (EntityAlreadyExistsException eae)
         {
             System.err.println(eae);
         }
@@ -95,9 +95,9 @@ public class Organization {
             System.out.println(i + ". " + donatorList.get(i).getName());
         }
     }
-    public void checkDonatorExists(User donator) throws ElementAlreadyExistsException {
+    public void checkDonatorExists(User donator) throws EntityAlreadyExistsException {
         for (int i = 0; i < donatorList.size(); i++){
-            if ((donator.getPhone() == donatorList.get(i).getPhone()) && (donator.getName() == donatorList.get(i).getName())) {throw new ElementAlreadyExistsException();} // check each one of the entityList elements
+            if ((donator.getPhone() == donatorList.get(i).getPhone()) && (donator.getName() == donatorList.get(i).getName())) {throw new EntityAlreadyExistsException();} // check each one of the entityList elements
         }
     }
     public ArrayList<Donator> getDonatorList(){
@@ -110,7 +110,7 @@ public class Organization {
         {
             this.checkBeneficiaryExists(ben); // HANDLED
         }
-        catch (ElementAlreadyExistsException eae)
+        catch (EntityAlreadyExistsException eae)
         {
             System.err.println(eae);
         }
@@ -122,9 +122,9 @@ public class Organization {
     void listBeneficiaries(){
         System.out.println(i+ ". " + this.beneficaryList.get(i).getName());
     }
-    public void checkBeneficiaryExists(User beneficiary) throws ElementAlreadyExistsException {
+    public void checkBeneficiaryExists(User beneficiary) throws EntityAlreadyExistsException {
         for (int i = 0; i < beneficiaryList.size(); i++){
-            if ((beneficiary.getPhone() == beneficiaryList.get(i).getPhone()) && (beneficiary.getName() == beneficiaryList.get(i).getName())) {throw new ElementAlreadyExistsException();}
+            if ((beneficiary.getPhone() == beneficiaryList.get(i).getPhone()) && (beneficiary.getName() == beneficiaryList.get(i).getName())) {throw new EntityAlreadyExistsException();}
         }
     }
     public ArrayList<Beneficiary> getBeneficiaryList(){
