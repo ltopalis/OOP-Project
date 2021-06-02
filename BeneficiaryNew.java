@@ -35,11 +35,9 @@ public class Beneficiary extends User{
     public void addRequest(RequestDonation rd, Organization org){
             this.requestsList.add(rd, org, null);
         } // adds a RequestDonation in list
-    }
     public void removeRequest(RequestDonation rd){
             this.requestsList.remove(rd.getEntity());
         } // removes RequestDonation from list
-    }
     public Requests getRequestsList(){
     return requestsList;
     }
