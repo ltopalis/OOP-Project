@@ -1,60 +1,88 @@
-import java.util.ArrayList;
+public class Beneficiary extends User {
+    private int noPersons = 1;
+    private RequestDonationList receivedList = new RequestDonationList(); // Είδη που έχει ήδη λάβει
+    private Requests requestsList = new Requests(); // Είδη που ζητάει
 
-public class Beneficiary extends User{
-  private int noPersons = 1;
-  private ArrayList<RequestDonation>receivedList = new ArrayList<RequestDonation>();
-  private ArrayList<Requests>requestsList = new ArrayList<Requests>();
-    
-  public Beneficiary(String name, String phone, int noPersons)
-  {
-    super(name, phone);
-    this.noPersons = noPersons;
-  }
-    
-  public void setNoPersons(int noPersons) {this.noPersons = noPersons;}
-  public int getNoPersons(){return noPersons;}
-  public int size(){return receivedList.size();}
-  
-  public void setAddReceivedList(RequestDonation ReceivedList) {receivedList.add(ReceivedList);} // Η add() επιστρέφει true αν όλα έχουν πάει καλά
-  public RequestDonation getAddReceivedList(int elem) {return receivedList.get(elem);} // IndexOutOfBoundsException
-  public boolean removeElementFromReceivedlist(int elem) {
-    try{
-      receivedList.remove(elem);
+    public Beneficiary(String name, String phone, int noPersons) {
+        super(name, phone);
+        this.noPersons = noPersons;
     }
-    catch (IndexOutOfBoundsException e){
-      System.out.println(e);
-      return false;
+
+    public int getNoPersons() {
+        return noPersons;
     }
-    return true;
-  }
-  public boolean setAddRequestsList(Requests RequestsList) {return requestsList.add(RequestsList);} // Η add() επιστρέφει true αν όλα έχουν πάει καλά
-  public Requests getAddRequestsList(int elem) {return requestsList.get(elem);} 
-   
-public boolean removeElemFromRequestsList(int elem) {
-    try{
-      requestsList.remove(elem);
+
+    public void setNoPersons(int noPersons) throws WrongNoPersons{
+        if(noPersons<0) throw new WrongNoPersons();
+        this.noPersons = noPersons;
     }
-    catch (IndexOutOfBoundsException iBoundsException){
-      System.out.println(iBoundsException);
-      return false;
+
+    /* receivedList */
+
+    public void addReceivedList(RequestDonation requestDonation, Organization organization)
+            throws TheOrganizationDoesNotSupportTheEntity, WrongQuantity, TheOrganizationDoesNotSupportTheQuantity, TheEntityDoesNotExistInrdEntities {
+        {
+            receivedList.add(requestDonation, organization, this);
+        }
     }
-    return true;
-  }
 
-  @Override
-  public String toString() {
-      String s = getName() + " " + getPhone() + "\n" ;
+    public boolean removeReceivedList(RequestDonation requestDonation) throws TheEntityDoesNotExistInrdEntities{
+        return receivedList.remove(requestDonation);
+    }
 
-      for(int i = 0; i<receivedList.size(); i++)
-        s += receivedList.get(i).getEntity().getID() + " " + receivedList.get(i).getEntity().getName() +
-         " (" + receivedList.get(i).getQuantity() + ")\n";
+    public void modifyReceivedList(int elem, double quantity){
+        receivedList.modify(elem, quantity);
+    }
 
-      return s;
-  } 
-  
-  // Nikos 694444444
-  // 55 kfdshksla (55)
-  // 
+    public void modifyReceivedList(Entity entity, double quantity, Organization organization)
+            throws TheEntityDoesNotExistInrdEntities, WrongQuantity, TheOrganizationDoesNotSupportTheQuantity{
+        receivedList.modify(entity, quantity, this, organization);
+    }
 
-  // ID name (Quality)
+    public String monitorReceivedList(){
+        return receivedList.monitor();
+    }
+
+    public boolean resetReceivedList(){
+        return receivedList.reset();
+    }
+
+    /* requestsList */
+
+    public Requests getRequestsList(){
+        return requestsList;
+    }
+
+    public void removeAnOffer(RequestDonation requestDonation) throws TheEntityDoesNotExistInrdEntities{
+        requestsList.remove(requestDonation);
+    }
+
+    public boolean requestListIsEmpty(){
+        return requestsList.getRdEntities().isEmpty();
+    }
+
+    public void addRequestList(RequestDonation requestDonation, Organization organization)
+            throws TheOrganizationDoesNotSupportTheEntity, WrongQuantity, TheOrganizationDoesNotSupportTheQuantity, TheEntityDoesNotExistInrdEntities {
+        requestsList.add(requestDonation, organization, this);
+    }
+
+    public void modifyRequestList(Entity entity, double quantity, Organization organization)
+            throws TheEntityDoesNotExistInrdEntities, WrongQuantity, TheOrganizationDoesNotSupportTheQuantity{
+        requestsList.modify(entity, quantity, this, organization);
+    }
+
+    public void commitRequestList(RequestDonation requestDonation, Organization organization)
+            throws WrongQuantity, TheOrganizationDoesNotSupportTheQuantity,
+            TheEntityDoesNotExistInrdEntities, TheOrganizationDoesNotSupportTheEntity{
+        requestsList.commit(requestDonation, this, organization);
+    }
+
+    public String monitorRequestList(){
+        return requestsList.monitor();
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " Αριθμός μελών: " + getNoPersons();
+    }
 }

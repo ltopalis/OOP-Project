@@ -1,165 +1,225 @@
-import java.util.*;
+import java.util.ArrayList;
 
 public class Organization {
-
-    //INSTANCE VARIABLES:
-    private String name; 
+    private String name;
     private Admin admin;
-
     private ArrayList<Entity> entityList = new ArrayList<>();                     // μια λίστα από "entities" που μπορούν να διανεμηθούν σε "beneficiaries"
-    private ArrayList<Beneficiary> beneficiaryList = new ArrayList<>();           // μια λίστα από "beneficiaries" 
-    private ArrayList<Donator> donatorList = new ArrayList<>();                   // μια λίστα από "donators"
-    private RequestDonationList currentDonations = new RequestDonationList();     // ΟΛΕΣ ΟΙ ΠΡΟΣΦΟΡΕΣ ΤΟΥ ΟΡΓΑΝΙΣΜΟΥ ΕΔΩ ! ! ! 
-    
-    // CONSTRUCTOR:
-    public Organization(String name, Admin admin){
+    private ArrayList<Donator> donatorList = new ArrayList<>();
+    private ArrayList<Beneficiary> beneficiaryList = new ArrayList<>();
+    private RequestDonationList currentDonations = new RequestDonationList();
+    private RequestDonationList materialList = new RequestDonationList();
+    private RequestDonationList serviceList = new RequestDonationList();
+
+    public Organization(String name) {
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setAdmin(Admin admin){
         this.admin = admin;
     }
-    public Organization(String name, User user){
-        this.name = name;
-        this.admin = (Admin)user;
-    }
-    // METHODS:
-    public String getName(){
-        return this.name;
-    }
-    // Admin:
-    public void setAdmin(Admin adm){
-        this.admin = adm; // change organization's Admin 
-    }
+
     public Admin getAdmin(){
-        return admin; // returns organization's Admin (object)
+        return admin;
     }
 
-    // LIST MANAGEMENT:
-
-    // #1 entityList:
-    public void addEntity(Entity ent){
-         // checks if the entity already exists in entityList:
-        try
-        {
-            this.checkEntityExists(ent); // HANDLED
-        }
-        catch (EntityAlreadyExistsException eae)
-        {
-            System.err.println(eae);
-        }
-        entityList.add(ent);
-    }
-    public void removeEntity(Entity ent){
-        // check if admin?
-        if ((this.admin).getisAdmin() == false) {return;} // abbort
-        entityList.remove(ent);
-    }
-    public void listEntities(){
-       System.out.println("Service List:");
-       for (int i = 0; i < entityList.size(); i++){
-           if (entityList.get(i) instanceof Service){
-               System.out.println(entityList.get(i).getName());
-           }
-       }
-        System.out.println("Material List:");
-       for (int i = 0; i < entityList.size(); i++){ // scan the contents of the List
-           if (entityList.get(i) instanceof Material){ // check if it is a Material
-               System.out.println(entityList.get(i).getName());
-           }
-       }
-    }
-    public void checkEntityExists(Entity ent) throws EntityAlreadyExistsException { // NEW  
-        for (int i = 0; i < entityList.size(); i++){
-            if (ent.getID() == entityList.get(i).getID()) {throw new EntityAlreadyExistsException();} // check each one of the entityList elements
-        }
-    }
-    public ArrayList<Entity> getEntityList(){
-        return this.entityList;
-    }
-    // #2 donatorList:
-    public void insertDonator(User don){
-        try
-        {
-            this.checkDonatorExists(don); // HANDLED
-        }
-        catch (EntityAlreadyExistsException eae)
-        {
-            System.err.println(eae);
-        }
-        donatorList.add((Donator)don);
-    }
-    public void removeDonator(User don){
-        donatorList.remove((Donator)don);
-    }
-    public void listDonators(){
-        System.out.println("Donator List:");
-        for(int i = 0; i < donatorList.size(); i++){
-            System.out.println(i + ". " + donatorList.get(i).getName());
-        }
-    }
-    public void checkDonatorExists(User donator) throws EntityAlreadyExistsException {
-        for (int i = 0; i < donatorList.size(); i++){
-            if ((donator.getPhone() == donatorList.get(i).getPhone()) && (donator.getName() == donatorList.get(i).getName())) {throw new EntityAlreadyExistsException();} // check each one of the entityList elements
-        }
-    }
-    public ArrayList<Donator> getDonatorList(){
-        return this.donatorList;
+    public int materialListSize(){
+        return materialList.getRdEntities().size();
     }
 
-    // #3 benefiaciaryList:
-    public void insertBeneficiary(User ben){
-        try
-        {
-            this.checkBeneficiaryExists(ben); // HANDLED
+    public int serviceListSize(){
+        return serviceList.getRdEntities().size();
+    }
+
+    public RequestDonationList getMaterialList(){
+        return materialList;
+    }
+
+    public RequestDonationList getServiceList(){
+        return serviceList;
+    }
+
+    public void addEntity(Entity entity) throws ElementAlreadyExistsInEntityList{
+        for(int i = 0; i<entityList.size(); i++)
+            if(entity.getID() == entityList.get(i).getID())
+                throw new ElementAlreadyExistsInEntityList();
+        entityList.add(entity);
+        System.out.println("Το στοιχείο προστέθηκε επιτυχώς στην λίστα του οργανισμού");
+
+    }
+
+    public boolean checkEntityList(Entity entity){
+        for(int i=0; i<entityList.size(); i++)
+            if(entity.getID() == entityList.get(i).getID())
+                return true;
+        return false;
+    }
+
+    public void removeEntity(Entity entity, User user) throws TheUserHasNoAccess{
+        if(user instanceof Admin)
+            for(int i=0; i<entityList.size(); i++)
+                if(entityList.get(i).getID() == entity.getID()) {
+                    entityList.remove(i);
+                    System.out.println("Το στοιχείο αφαιρέθηκε με επιτυχία");
+                    break;
+                }
+        else throw new TheUserHasNoAccess();
+    }
+
+    public User checkAPhoneNumber(String phone) throws TheUserDoesNotExist{
+        for (int i = 0; i<beneficiaryListSize(); i++)
+            if(phone.equals(beneficiaryList.get(i).getPhone()))
+                return beneficiaryList.get(i);
+
+        for (int i = 0; i<donatorListSize(); i++)
+            if(phone.equals(donatorList.get(i).getPhone()))
+                return donatorList.get(i);
+
+            if(phone.equals(admin.getPhone()))
+                return admin;
+            else
+                throw new TheUserDoesNotExist();
+    }
+
+    public ArrayList<Donator> getDonatorList() {
+        return donatorList;
+    }
+
+    public int donatorListSize(){
+        return donatorList.size();
+    }
+
+    public void insertDonator(Donator donator)throws TheUserAlreadyExistsInDonatorList{
+        for(int i=0; i<donatorList.size(); i++)
+            if(donatorList.get(i) == donator)
+                throw new TheUserAlreadyExistsInDonatorList();
+
+        donatorList.add(donator);
+        System.out.println("Ο χρήστης προστέθηκε με επιτυχία στην λίστα του οργανισμού");
+    }
+
+    public void removeDonator(Donator donator){
+        for(int i = 0; i<donatorList.size(); i++)
+            if(donator == donatorList.get(i)){
+                donatorList.remove(i);
+                System.out.println("Ο δωρητής αφαιρέθηκε με επιτυχία");
+                break;
+            }
+    }
+
+    public String listDonator(){
+        String s = "Υπάρχουν " + donatorList.size() + " δωρητές στον οργανισμό.\n";
+        s += "=".repeat(s.length());
+        s += "\n";
+        for (int i=0; i<donatorList.size(); i++)
+            s += (i+1) + ". "  + donatorList.get(i) + "\n";
+        return s;
+    }
+
+    public ArrayList<Beneficiary> getBeneficiaryList() {
+        return beneficiaryList;
+    }
+
+    public int beneficiaryListSize(){
+        return beneficiaryList.size();
+    }
+
+    public void insertBeneficiary(Beneficiary beneficiary)throws TheUserAlreadyExistsInBeneficiaryList{
+        for(int i=0; i<beneficiaryList.size(); i++)
+            if(beneficiaryList.get(i) == beneficiary)
+                throw new TheUserAlreadyExistsInBeneficiaryList();
+
+        beneficiaryList.add(beneficiary);
+        System.out.println("Ο χρήστης προστέθηκε με επιτυχία στην λίστα του οργανισμού");
+    }
+
+    public void removeBeneficiary(Beneficiary beneficiary){
+        for(int i = 0; i<beneficiaryList.size(); i++)
+            if(beneficiary == beneficiaryList.get(i)){
+                beneficiaryList.remove(i);
+                System.out.println("Ο εποφελούμενος αφαιρέθηκε με επιτυχία");
+                break;
+            }
+    }
+
+    public String listBeneficiary(){
+        String s = "Υπάρχουν " + beneficiaryList.size() + " εποφελούμενοι στον οργανισμό.\n";
+        s += "=".repeat(s.length());
+        s += "\n";
+        for (int i=0; i<beneficiaryList.size(); i++)
+            s += (i+1) + ". "  + beneficiaryList.get(i) + "\n";
+        return s;
+    }
+
+    public String listEntities(){
+        String s = "Στον οργανισμό υπάρχουν " + entityList.size() + " στοιχεία\n";
+        s += "\tMaterials\n";
+        s += "=".repeat("\tMaterials\t".length() + 6);
+        s += "\n";
+        for(int i=0; i<materialListSize(); i++)
+            s += materialList.getRdEntities().get(i) + "\n";
+        s += "\tServices\n";
+        s += "=".repeat("\tServices".length() + 6);
+        s += "\n";
+        for(int i=0; i<serviceListSize(); i++)
+            s += serviceList.getRdEntities().get(i) + "\n";
+
+        return s;
+    }
+
+    public String listMaterials(){
+        String s = "";
+        int i;
+        for(i=0; i<materialListSize()-1; i++)
+            s += (i+1) + ". " + materialList.getRdEntities().get(i).getEntity().getName() + "\t(" + materialList.getRdEntities().get(i).getQuantity() + ")\n";
+        s+= (i+1) + ". " + materialList.getRdEntities().get(i).getEntity().getName() + "\t(" + materialList.getRdEntities().get(i).getQuantity() + ")";
+        return s;
+    }
+
+    public String listServices(){
+        String s = "";
+        int i;
+        for(i=0; i<serviceListSize()-1; i++)
+            s += (i+1) + ". " + serviceList.getRdEntities().get(i).getEntity().getName() + "\t(" + serviceList.getRdEntities().get(i).getQuantity() + ")\n";
+        s += (i+1) + ". " + serviceList.getRdEntities().get(i).getEntity().getName() + "\t(" + serviceList.getRdEntities().get(i).getQuantity() + ")";
+        return s;
+    }
+
+    public void addCurrentDonation(RequestDonationList listOfRequestDonation)
+            throws TheOrganizationDoesNotSupportTheEntity, WrongQuantity, TheOrganizationDoesNotSupportTheQuantity, TheEntityDoesNotExistInrdEntities {
+        for(int i=0; i<listOfRequestDonation.getRdEntities().size(); i++) {
+            currentDonations.add(listOfRequestDonation.getRdEntities().get(i), this, null);
+            if(listOfRequestDonation.getRdEntities().get(i).getEntity() instanceof Material)
+                materialList.add(listOfRequestDonation.getRdEntities().get(i), this, null);
+            else
+                serviceList.add(listOfRequestDonation.getRdEntities().get(i), this, null);
         }
-        catch (EntityAlreadyExistsException eae)
-        {
-            System.err.println(eae);
-        }
-        beneficiaryList.add((Beneficiary)ben);
     }
-    public void removeBeneficiary(User ben){
-        beneficiaryList.remove((Beneficiary)ben);
+
+    public void addCurrentDonation(RequestDonation requestDonation, Beneficiary beneficiary)
+            throws TheOrganizationDoesNotSupportTheEntity, WrongQuantity, TheOrganizationDoesNotSupportTheQuantity, TheEntityDoesNotExistInrdEntities {
+        currentDonations.add(requestDonation, this, beneficiary);
+        if(requestDonation.getEntity() instanceof Material)
+            materialList.add(requestDonation, this, beneficiary);
+        else
+            serviceList.add(requestDonation, this, beneficiary);
     }
-    public void listBeneficiaries(){
-        System.out.println("Beneficiary List:");
-        for(int i = 0; i < beneficiaryList.size(); i++){
-            System.out.println(i+ ". " + this.beneficiaryList.get(i).getName());
-        }
+
+    public void quantityCheck(RequestDonation requestDonation) throws WrongQuantity, TheOrganizationDoesNotSupportTheQuantity{
+        if(requestDonation.getQuantity() < 0) throw new WrongQuantity();
+
+        for(int i=0; i<currentDonations.getRdEntities().size(); i++)
+            if(requestDonation.getEntity().getID() == currentDonations.getRdEntities().get(i).getEntity().getID())
+                if(requestDonation.getQuantity() > currentDonations.getRdEntities().get(i).getQuantity())
+                    throw new TheOrganizationDoesNotSupportTheQuantity();
     }
-    public void checkBeneficiaryExists(User beneficiary) throws EntityAlreadyExistsException {
-        for (int i = 0; i < beneficiaryList.size(); i++){
-            if ((beneficiary.getPhone() == beneficiaryList.get(i).getPhone()) && (beneficiary.getName() == beneficiaryList.get(i).getName())) {throw new EntityAlreadyExistsException();}
-        }
+
+    public void removeCurrentDonationQuantity(RequestDonation requestDonation){
+        for(int i=0; i<currentDonations.getRdEntities().size(); i++)
+            if(currentDonations.getRdEntities().get(i).getEntity().getID() == requestDonation.getEntity().getID())
+                currentDonations.getRdEntities().get(i).addQuantity((requestDonation.getQuantity() * -1));
     }
-    public ArrayList<Beneficiary> getBeneficiaryList(){
-        return this.beneficiaryList;
-    }
-    // #4 currentDonations: (wrapper methods)
-    public boolean addDonation(RequestDonation rd){
-        try
-        {
-            return this.currentDonations.add(rd, this, null);
-        }
-        catch (TheEntityDoesntExistInCompanyListException ex)
-        {
-            System.err.println(ex);
-        }
-        // NOTICE: quantity automatically rises, if given Entity, already exists (see RequestDonationList.add >> Requests.addQuantity)
-        return true;
-    }
-    public void removeDonation(RequestDonation rd){
-        try
-        {
-            this.currentDonations.remove(rd.getEntity());
-        }
-        catch (ThereIsNotSuchElementException hi)
-        {
-            System.err.println(hi);
-        }
-    }
-    public int sizeDonation(){
-        return this.currentDonations.listSize();
-    }
-    public RequestDonationList getCurrentDonations(){
-        return this.currentDonations;
-    }
-} // end Organization class
+}

@@ -1,63 +1,46 @@
-import java.util.ArrayList;
+public class Donator extends User{
+    private Offers offerList = new Offers();
 
-public class Donator extends User{   
-  private ArrayList<Offers> offersList = new ArrayList<Offers>();
-  aimport java.util.ArrayList;
-public class Donator extends User{   
-  private ArrayList<Offers> offersList = new ArrayList<Offers>();
-  
-  public Donator(String name, String phone){
-    super(name, phone);     
-  }
-  
-  public void AddOffersList(Offers OffersList) {offersList.add(OffersList);}
-  
-  public Offers getOFFERList(int elem) { // Η get() ρίχνει IndexOutOfBoundsException
-  try{
-     return offersList.get(elem);//γτ το κοκκινιζει
-  } // είχες ξεχάσει να σβήσεις την προηγούμενη υλοποίηση 
-  catch (IndexOutOfBoundsException e){
-    System.err.println(e);
-    return null; // Στην Java πρέπει σε κάθε διαδρομή να επιστρέφεται κάτι
-    // Αν πίασει Exception δεν θα επιστρέψει κάτι γιαυτό σου έβγαζε λάθος.
-    // Απλά έβαλα να επιστρέψει το null που σημαίνει τίποτε. Τα στοιχεία που έχει ο πίνακας σου είναι αναφορές
-    // συνεπώς έπρεπε να έβαζα null ως επιστρεφόμενος τύπος.
-    // Κατάλαβες? Ωραία!
-  }// μαλιστα καπετανιε 
-  // στη μπενεφισιαρι ελα 
-}
-  /* ΓΕΙΑΑΑΑΑΑΑΑ */
-  public boolean removeElemFromOffersList(int elem) {
-    try{
-      offersList.remove(elem);
+    public Donator(String name, String phone) {
+        super(name, phone);
     }
-    catch (IndexOutOfBoundsException iBoundsException){
-      System.out.println(iBoundsException); // Τις εξαιρέσεις να τις βγάζουμε καλύτερα στην error stream (System.err.println(iBoundsException))
-      return false;
+
+    public boolean isEmpty(){
+        return offerList.getRdEntities().isEmpty();
     }
-    return true;
-  } 
 
-}
-
-  public Donator(String name, String phone){
-    super(name, phone);     
-  }
-  
-  public void AddOffersList(Offers OffersList) {offersList.add(OffersList);}
-  
-  public Offers getOFFERList(int elem) {return offersList.get(elem);} // Η get() ρίχνει IndexOutOfBoundsException
-  
-
-  public boolean removeElemFromOffersList(int elem) {
-    try{
-      offersList.remove(elem);
+    public Offers getOfferList(){
+        return offerList;
     }
-    catch (IndexOutOfBoundsException iBoundsException){
-      System.out.println(iBoundsException); // Τις εξαιρέσεις να τις βγάζουμε καλύτερα στην error stream (System.err.println(iBoundsException))
-      return false;
-    }
-    return true;
-  } 
 
+    public void addAnOffer(RequestDonation requestDonation, Organization organization)
+            throws TheOrganizationDoesNotSupportTheEntity, WrongQuantity, TheOrganizationDoesNotSupportTheQuantity, TheEntityDoesNotExistInrdEntities {
+        offerList.add(requestDonation, organization, null);
+    }
+
+    public void removeAnOffer(RequestDonation requestDonation) throws TheEntityDoesNotExistInrdEntities{
+        offerList.remove(requestDonation);
+    }
+
+    public void modifyAnOffer(int elem, double quantity){
+        offerList.modify(elem, quantity);
+    }
+
+    public void modifyAnOffer(Entity entity, double quantity)
+            throws TheEntityDoesNotExistInrdEntities, WrongQuantity, TheOrganizationDoesNotSupportTheQuantity{
+        offerList.modify(entity, quantity, null, null);
+    }
+
+    public String monitorAllOffers(){
+        return offerList.monitor();
+    }
+
+    public boolean resetTheList(){
+        return offerList.reset();
+    }
+
+    public void commitTheOffer(Organization organization)
+            throws TheOrganizationDoesNotSupportTheEntity, WrongQuantity, TheOrganizationDoesNotSupportTheQuantity, TheEntityDoesNotExistInrdEntities {
+        offerList.commit(organization, null);
+    }
 }

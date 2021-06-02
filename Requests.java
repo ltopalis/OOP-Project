@@ -1,119 +1,45 @@
-public class Requests extends RequestDonationList{
+public class Requests  extends RequestDonationList{
     @Override
-    public boolean add(RequestDonation requestDonation, Organization org, Beneficiary ben)
-            throws TheEntityDoesntExistInCompanyListException {
-                try{
-                    org.checkEntityExists(requestDonation.getEntity()); // check if the Entity exists
-
-                    if(validRequestDonation(requestDonation, ben) && 
-                    requestDonation.getQuantity() <= org.getCuRequestDonation().getQuantity(requestDonation.getEntity().getID()))
-                        return super.add(requestDonation, org, null);
-
-                }catch(TheEntityDoesntExistInCompanyListException e){
-                    System.err.println(e);
-                    return false;
-                } catch(WrongQuantityException e){
-                    System.err.println(e);
-                    return false;
-                }
-                
-                return true;
+    public void add(RequestDonation requestDonation, Organization organization, Beneficiary beneficiary)
+            throws TheOrganizationDoesNotSupportTheEntity, WrongQuantity, TheOrganizationDoesNotSupportTheQuantity, TheEntityDoesNotExistInrdEntities {
+        validRequestDonation(requestDonation, beneficiary);
+        organization.quantityCheck(requestDonation);
+        super.add(requestDonation, organization, null);
     }
 
     @Override
-    public boolean modify(int position, double quantity, Organization org, Beneficiary ben) {
-        try{
-            if(validRequestDonation(getArrayList().get(position), ben) && 
-            getArrayList().get(position).getQuantity() <= 
-            org.getCuRequestDonation().getQuantity(getArrayList().get(position).getEntity().getID()))
-                return super.modify(position, quantity, null, null);
-        }catch(WrongQuantityException e){
-            System.err.println(e);
-            return false;
-        } catch(IndexOutOfBoundsException e){
-            System.err.print(e);
-            return false;
-        }catch(Exception e){
-            System.err.println("Παρουσιάστηκε πρόβλημα\n" + e);
-            return false;
-        }
-        
-        return false;        
+    public void modify(Entity entity, double quantity, Beneficiary beneficiary, Organization organization)
+            throws TheEntityDoesNotExistInrdEntities, WrongQuantity, TheOrganizationDoesNotSupportTheQuantity {
+        validRequestDonation(new RequestDonation(entity, quantity), beneficiary);
+        organization.quantityCheck(new RequestDonation(entity, quantity));
+        super.modify(entity, quantity, null, null);
     }
 
-    @Override
-    public boolean modify(Entity entity, double quantity, Organization org, Beneficiary ben) throws ThereIsNotSuchElementException {
-        try{
-            for(int i=0; i<org.getCuRequestDonation().listSize(); i++){
-                if(entity.getID() == org.getCuRequestDonation().get(i)){
-                    if(quantity <= org.getCuRequestDonation().getQuantity(entity.getID()) &&
-                    validRequestDonation(new RequestDonation(entity, quantity), ben))
-                        return super.modify(entity, quantity, null, null);
-                }
-                throw new ThereIsNotSuchElementException();
-            }
-        }catch(ThereIsNotSuchElementException e){
-            System.err.println(entity.getID());
-            return false;
-        }catch(WrongQuantityException e){
-            System.err.println(e);
-            return false;
-        }catch(IndexOutOfBoundsException e){
-            System.err.println(e);
-            return false;
-        }catch(Exception e){
-            System.err.println("Παρουσιάστηκε πρόβλημα\n" + e);
-            return false;
-        }
-        return false;
-
-    }
-
-    public boolean validRequestDonation(RequestDonation requestDonation, Beneficiary ben) throws WrongQuantityException{
+    private boolean validRequestDonation(RequestDonation requestDonation, Beneficiary ben) throws WrongQuantity, TheEntityDoesNotExistInrdEntities {
         if(requestDonation.getEntity().getClass() == Service.class) return true;
 
         switch (ben.getNoPersons()){
             case 1: // level1
-                if(requestDonation.getQuantity() <= ((Material)requestDonation.getEntity()).getLevel1()) return true ;
-                else throw new WrongQuantityException();
+                if(requestDonation.getQuantity() <= ((Material)super.get(requestDonation.getEntity().getID()).getEntity()).getLevel1()) return true ;
+                else throw new WrongQuantity(((Material)requestDonation.getEntity()).getLevel1());
             case 2:
             case 3:
             case 4: // level2
                 if(requestDonation.getQuantity() <= ((Material)requestDonation.getEntity()).getLevel2()) return true ;
-                else throw new WrongQuantityException();
+                else throw new WrongQuantity(((Material)requestDonation.getEntity()).getLevel2());
             default: // level3
                 if(requestDonation.getQuantity() <= ((Material)requestDonation.getEntity()).getLevel3()) return true ;
-                else throw new WrongQuantityException();
+                else throw new WrongQuantity(((Material)requestDonation.getEntity()).getLevel3());
         }
     }
 
-    public boolean commit(RequestDonation requestDonation, Organization org, Beneficiary ben){
-        try{
-            org.checkEntityExists(requestDonation.getEntity()); // check if the Entity exists
-
-            if(validRequestDonation(requestDonation, ben) && 
-            requestDonation.getQuantity() <= org.getCuRequestDonation().getQuantity(requestDonation.getEntity().getID())){
-                org.removeDonation(requestDonation);
-                super.remove(requestDonation.getEntity());
-                ben.setAddReceivedList(requestDonation);
-                return true;
-            }
-
-        }catch(TheEntityDoesntExistInCompanyListException e){
-            System.err.println(e);
-            return false;
-        } catch(WrongQuantityException e){
-            System.err.println(e);
-            return false;
-        }catch(ThereIsNotSuchElementException e){
-            System.err.println(e);
-            return false;
-        }catch(Exception e){
-            System.err.println(e);
-            return false;
-        }
-        return true;
-
+    public void commit(RequestDonation requestDonation, Beneficiary beneficiary, Organization organization)
+            throws WrongQuantity, TheOrganizationDoesNotSupportTheQuantity,
+            TheOrganizationDoesNotSupportTheEntity, TheEntityDoesNotExistInrdEntities{
+        validRequestDonation(requestDonation, beneficiary);
+        organization.quantityCheck(requestDonation);
+        organization.removeCurrentDonationQuantity(requestDonation);
+        super.remove(requestDonation);
+        beneficiary.addReceivedList(requestDonation, organization);
     }
-
 }
