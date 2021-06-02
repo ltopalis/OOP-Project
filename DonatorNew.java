@@ -24,4 +24,4 @@ public class Donator extends User{
         return true;
     }
 }
-}
+
