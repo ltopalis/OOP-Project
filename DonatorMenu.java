@@ -23,7 +23,7 @@ public class DonatorMenu {
                     if(!(s.equals("n") || s.equals("y")))
                         throw new WrongInput();
                     if(s.equals("y")) {
-                        System.out.println("Πόση ποσότητα επιθυμείτε να προσφέρετε; ");
+                        System.out.print("Πόση ποσότητα επιθυμείτε να προσφέρετε; ");
                         double quantity = sc.nextDouble();
                         if (quantity < 0)
                             throw new WrongInput();
@@ -109,7 +109,7 @@ public class DonatorMenu {
                         break;
                     break;
                 case 2:
-                    System.out.print("Είστε σίγουροι ότι θέλετε να διαγράψετε όλες τις παροχέ σας;(y/n) ");
+                    System.out.print("Είστε σίγουροι ότι θέλετε να διαγράψετε όλες τις παροχές σας;(y/n) ");
                     String s = sc.next();
                     if(!(s.equals("n") || s.equals("y"))) throw new WrongInput();
                     if(s.equals("y")) {
@@ -118,7 +118,7 @@ public class DonatorMenu {
                     }
                     break;
                 case 3:
-                    System.out.print("Είστε σίγουροι ότι θέλετε να υποβάλετε τις παροχέ σας;(y/n) ");
+                    System.out.print("Είστε σίγουροι ότι θέλετε να υποβάλετε τις παροχές σας;(y/n) ");
                     s = sc.next();
                     if(!(s.equals("n") || s.equals("y"))) throw new WrongInput();
                     if(s.equals("y")) {
@@ -164,7 +164,7 @@ public class DonatorMenu {
                     showOffers(sc, donator, organization);
                     break;
                 case  3:
-                    System.out.print("Είστε σίγουροι ότι θέλετε να υποβάλετε τις παροχέ σας;(y/n) ");
+                    System.out.print("Είστε σίγουροι ότι θέλετε να υποβάλετε τις παροχές σας;(y/n) ");
                     String s = sc.next();
                     if(!(s.equals("n") || s.equals("y"))) throw new WrongInput();
                     if(s.equals("y")) {

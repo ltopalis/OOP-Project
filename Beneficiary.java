@@ -20,7 +20,8 @@ public class Beneficiary extends User {
     /* receivedList */
 
     public void addReceivedList(RequestDonation requestDonation, Organization organization)
-            throws TheOrganizationDoesNotSupportTheEntity, WrongQuantity, TheOrganizationDoesNotSupportTheQuantity, TheEntityDoesNotExistInrdEntities {
+            throws TheOrganizationDoesNotSupportTheEntity, WrongQuantity, 
+            TheOrganizationDoesNotSupportTheQuantity, TheEntityDoesNotExistInrdEntities {
         {
             receivedList.add(requestDonation, organization, this);
         }

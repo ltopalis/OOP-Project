@@ -46,9 +46,12 @@ public class RequestDonationList {
 
     public void modify(Entity entity, double quantity, Beneficiary beneficiary, Organization organization)
             throws TheEntityDoesNotExistInrdEntities, WrongQuantity, TheOrganizationDoesNotSupportTheQuantity{
-        for (int i=0; i<rdEntities.size(); i++)
-            if(entity.getID() == rdEntities.get(i).getEntity().getID())
+        int i;
+        for (i=0; i<rdEntities.size(); i++)
+            if(entity.getID() == rdEntities.get(i).getEntity().getID()) {
                 rdEntities.get(i).setQuantity(quantity);
+                return;
+            }
 
         throw new TheEntityDoesNotExistInrdEntities();
     }

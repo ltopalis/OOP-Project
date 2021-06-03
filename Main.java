@@ -1,4 +1,5 @@
 import java.util.InputMismatchException;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
@@ -41,15 +42,21 @@ public class Main {
             organization.insertBeneficiary(beneficiary1);
             organization.insertBeneficiary(beneficiary2);
             organization.insertDonator(donator);
+            sc.useLocale(Locale.US);
+            sc.useDelimiter("[\n\t]");
             String phoneNumber = "";
             User user;
+
             
             while(true) {
                 try {
                     System.out.println("Γεία σας.");
                     System.out.print("Δώστε το τηλέφωνο σας (Για τερματισμό από το πρόγραμμα πληκρολογήστε e): ");
                     phoneNumber = sc.next();
-                    if(phoneNumber.equalsIgnoreCase("e")) System.exit(0);
+                    if(phoneNumber.equalsIgnoreCase("e")) {
+                        System.out.println("Bye bye!");
+                        System.exit(0);
+                    }
                     if (!phoneNumber.matches("[0-9]+")) throw new WrongInput(); // Ελέγχει αν ο αριθμός τηλεφώνου περιέχει μόνο αριθμούς
                     user = organization.checkAPhoneNumber(phoneNumber);
 
@@ -68,7 +75,7 @@ public class Main {
                             String name = sc.next();
                             switch (choice) {
                                 case 1:
-                                    System.out.print("Από πόσα μέλη αποτελέιται η οικογένεια σας; ");
+                                    System.out.print("Από πόσα μέλη αποτελείται η οικογένεια σας; ");
                                     int noPersons = sc.nextInt();
                                     Beneficiary newBeneficiary = new Beneficiary(name, phoneNumber, noPersons);
                                     organization.insertBeneficiary(newBeneficiary);
@@ -112,7 +119,7 @@ public class Main {
         } catch (TheUserAlreadyExistsInDonatorList theUserAlreadyExistsInDonatorList) {
             System.out.println(theUserAlreadyExistsInDonatorList);
         } catch (TheEntityDoesNotExistInrdEntities theEntityDoesNotExistInrdEntities) {
-            theEntityDoesNotExistInrdEntities.printStackTrace();
+            System.out.println(theEntityDoesNotExistInrdEntities);
         }
 
     }

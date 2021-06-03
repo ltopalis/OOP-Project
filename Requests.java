@@ -21,15 +21,15 @@ public class Requests  extends RequestDonationList{
         switch (ben.getNoPersons()){
             case 1: // level1
                 if(requestDonation.getQuantity() <= ((Material)super.get(requestDonation.getEntity().getID()).getEntity()).getLevel1()) return true ;
-                else throw new WrongQuantity(((Material)requestDonation.getEntity()).getLevel1());
+                else throw new WrongQuantity("Δικαιούστε μόνο " + ((Material)requestDonation.getEntity()).getLevel1() + " από το " + requestDonation.getEntity().getName());
             case 2:
             case 3:
             case 4: // level2
                 if(requestDonation.getQuantity() <= ((Material)requestDonation.getEntity()).getLevel2()) return true ;
-                else throw new WrongQuantity(((Material)requestDonation.getEntity()).getLevel2());
+                else throw new WrongQuantity("Δικαιούστε μόνο " + ((Material)requestDonation.getEntity()).getLevel2() + " από το " + requestDonation.getEntity().getName());
             default: // level3
                 if(requestDonation.getQuantity() <= ((Material)requestDonation.getEntity()).getLevel3()) return true ;
-                else throw new WrongQuantity(((Material)requestDonation.getEntity()).getLevel3());
+                else throw new WrongQuantity("Δικαιούστε μόνο " + ((Material)requestDonation.getEntity()).getLevel3() + " από το " + requestDonation.getEntity().getName());
         }
     }
 

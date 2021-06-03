@@ -86,7 +86,7 @@ public class BeneficiaryMenu {
                 case 1:
                     System.out.print("Επιλέξτε ένα είδος ");
                     choice = sc.nextInt();
-                    if(choice<0 || choice > (beneficiary.getRequestsList().getRdEntities().size()+1)) throw new WrongInput();
+                    if(choice<0 || choice > (beneficiary.getRequestsList().getRdEntities().size())) throw new WrongInput();
                     int elem = choice-1;
                     System.out.println(beneficiary.getRequestsList().getRdEntities().get(elem));
                     System.out.println("1. Διαγραφή παροχής");
@@ -137,13 +137,13 @@ public class BeneficiaryMenu {
         }catch (WrongInput e){
             System.out.println(e);
         } catch (TheEntityDoesNotExistInrdEntities theEntityDoesNotExistInrdEntities) {
-            theEntityDoesNotExistInrdEntities.printStackTrace();
+            System.out.println(theEntityDoesNotExistInrdEntities);
         } catch (TheOrganizationDoesNotSupportTheQuantity theOrganizationDoesNotSupportTheQuantity) {
-            theOrganizationDoesNotSupportTheQuantity.printStackTrace();
+            System.out.println(theOrganizationDoesNotSupportTheQuantity);
         } catch (WrongQuantity wrongQuantity) {
-            wrongQuantity.printStackTrace();
+            System.out.println(wrongQuantity);
         } catch (TheOrganizationDoesNotSupportTheEntity theOrganizationDoesNotSupportTheEntity) {
-            theOrganizationDoesNotSupportTheEntity.printStackTrace();
+            System.out.println(theOrganizationDoesNotSupportTheEntity);
         }
     }
 
@@ -167,8 +167,8 @@ public class BeneficiaryMenu {
                     showOffers(sc, beneficiary, organization);
                     break;
                 case  3:
-                    System.out.print("Είστε σίγουροι ότι θέλετε να υποβάλετε τις παροχέ σας;(y/n) ");
-                    String s = sc.next();
+                    System.out.print("Είστε σίγουροι ότι θέλετε να υποβάλετε τις παροχές σας;(y/n) ");
+                    String s = sc.nextLine();
                     if(!(s.equals("n") || s.equals("y"))) throw new WrongInput();
                     if(s.equals("y")) {
                         for(int i=beneficiary.getRequestsList().getRdEntities().size()-1; i>=0; i--)

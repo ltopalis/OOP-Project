@@ -20,7 +20,7 @@ public class Menu {
             else if (user instanceof Donator)
                 check = donatorMenu.donatorMenu(sc, (Donator) user, organization);
             else
-                check = adminMenu.AdminMenu(sc, (Admin) user, organization);
+                check = adminMenu.adminMenu(sc, (Admin) user, organization);
         }
     }
 }
