@@ -122,7 +122,7 @@ public class AdminMenu {
                     System.out.println("3. Διαγραφή εποφελούμενου");
                     System.out.println("4. Πίσω");
                     System.out.print("Επιλογη; ");
-                    int menuChoice = sc.nextInt();
+                    int menuChoice = sc.nextInt() - 1;
                     if (menuChoice==4) break; // BACK
                     System.out.println(org.listBeneficiary());
                     System.out.println("Επιλογή εποφελούμενου ");
@@ -131,7 +131,7 @@ public class AdminMenu {
                         throw new WrongInput();
                     switch(menuChoice){
                         case 1: // Τρέχουσα κατάσταση προιόντων που έχει λάβει
-                            System.out.println(org.getBeneficiaryList().get(beneficiaryChoice-1).getRequestsList().monitor());
+                            System.out.println(org.getBeneficiaryList().get(beneficiaryChoice).getRequestsList().monitor());
                             break;
                         case 2: // reset ReceivedList
                             System.out.println("Είστε σίγουροι ότι θέλετε να διαγράψετε όλα τα αγαθά που έχει λάβει ο εποφελούμενος;(y/n) ");
@@ -163,7 +163,7 @@ public class AdminMenu {
                     if (menuChoice==3) break; // BACK
                     System.out.println(org.listDonator());
                     System.out.print("Επιλογή δωρητή ");
-                    int donatorChoice = sc.nextInt();
+                    int donatorChoice = sc.nextInt() - 1;
                     if(donatorChoice<0 || donatorChoice > org.donatorListSize())
                         throw new WrongInput();
 
