@@ -16,20 +16,20 @@ public class Requests  extends RequestDonationList{
     }
 
     private boolean validRequestDonation(RequestDonation requestDonation, Beneficiary ben) throws WrongQuantity, TheEntityDoesNotExistInrdEntities {
-        if(requestDonation.getEntity().getClass() == Service.class) return true;
+        if(requestDonation.getEntity() instanceof Service) return true;
 
         switch (ben.getNoPersons()){
             case 1: // level1
                 if(requestDonation.getQuantity() <= ((Material)super.get(requestDonation.getEntity().getID()).getEntity()).getLevel1()) return true ;
-                else throw new WrongQuantity("Δικαιούστε μόνο " + ((Material)requestDonation.getEntity()).getLevel1() + " από το " + requestDonation.getEntity().getName());
+                else throw new WrongQuantity("Δικαιούστε μόνο " + ((Material)requestDonation.getEntity()).getLevel1() + " από το προιόν" + requestDonation.getEntity().getName());
             case 2:
             case 3:
             case 4: // level2
                 if(requestDonation.getQuantity() <= ((Material)requestDonation.getEntity()).getLevel2()) return true ;
-                else throw new WrongQuantity("Δικαιούστε μόνο " + ((Material)requestDonation.getEntity()).getLevel2() + " από το " + requestDonation.getEntity().getName());
+                else throw new WrongQuantity("Δικαιούστε μόνο " + ((Material)requestDonation.getEntity()).getLevel2() + " από το  προιόν" + requestDonation.getEntity().getName());
             default: // level3
                 if(requestDonation.getQuantity() <= ((Material)requestDonation.getEntity()).getLevel3()) return true ;
-                else throw new WrongQuantity("Δικαιούστε μόνο " + ((Material)requestDonation.getEntity()).getLevel3() + " από το " + requestDonation.getEntity().getName());
+                else throw new WrongQuantity("Δικαιούστε μόνο " + ((Material)requestDonation.getEntity()).getLevel3() + " από το  προιόν" + requestDonation.getEntity().getName());
         }
     }
 

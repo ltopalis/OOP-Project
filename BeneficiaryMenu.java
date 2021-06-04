@@ -20,7 +20,7 @@ public class BeneficiaryMenu {
                     System.out.println(organization.getMaterialList().getRdEntities().get(materialChoice-1));
                     System.out.print("Θα σας ενδιέφερε να το αποκτήσετε;(y/n) ");
                     String s = sc.next();
-                    if(!(s.equals("n") || s.equals("y")))
+                    if(!(s.equalsIgnoreCase("n") || s.equalsIgnoreCase("y")))
                         throw new WrongInput();
                     if(s.equals("y")) {
                         System.out.println("Πόση ποσότητα επιθυμείτε να λάβετε; ");

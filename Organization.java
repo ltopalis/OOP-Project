@@ -60,7 +60,7 @@ public class Organization {
 
     public void removeEntity(Entity entity, User user) throws TheUserHasNoAccess{
         if(user instanceof Admin)
-            for(int i=0; i<entityList.size(); i++)
+            for(int i=0; i<entityList.size(); i++)  
                 if(entityList.get(i).getID() == entity.getID()) {
                     entityList.remove(i);
                     System.out.println("Το στοιχείο αφαιρέθηκε με επιτυχία");
@@ -71,7 +71,7 @@ public class Organization {
 
     public User checkAPhoneNumber(String phone) throws TheUserDoesNotExist{
         for (int i = 0; i<beneficiaryListSize(); i++)
-            if(phone.equals(beneficiaryList.get(i).getPhone()))
+            if(phone.equals(beneficiaryList.get(i).getPhone())) 
                 return beneficiaryList.get(i);
 
         for (int i = 0; i<donatorListSize(); i++)

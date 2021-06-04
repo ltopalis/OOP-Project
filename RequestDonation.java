@@ -11,8 +11,8 @@ public class RequestDonation{
 
     public void setQuantity(double quantity){this.quantity = quantity;}
 
-    public void addQuantity(double quantity) {this.quantity += quantity;}
-
+    public void addQuantity(double quantity) {this.quantity += quantity;} 
+    
     public Entity getEntity(){return entity;}
 
     @Override

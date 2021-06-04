@@ -10,12 +10,12 @@ public class Main {
             Organization organization = new Organization("Let's get physical");
             Material milk = new Material(45, "Γάλα", "Πλήρες γάλα Μπαρμπαμπρίλιος", 1.0,2.0, 4.0);
             Material sugar = new Material(52, "Ζάχαρη", "Κρυσταλική ζάχαρη", 1.0, 1.0, 2.0);
-            Material rice = new Material(71, "ρύζι", "Καρολίνα του Μονακό", 1.0, 2.0, 6.0);
+            Material rice = new Material(71, "Ρύζι", "Καρολίνα του Μονακό", 1.0, 2.0, 6.0);
             Service MedicalSupport = new Service(87, "Ιατρική βοήθεια    ",
                     "Βοήθεια στο σπίτι από φοιτητές ιατρικής, φυσικοθεράπείας και νοσηλευτικής");
             Service NurserySupport = new Service(21, "Νοσηλευτική βοήθεια", "Η γιατρέσσα Εύη στο σπίτι σας");
             Service BabySitting = new Service(35, "Βρεφική φροντίδα    ",
-                    "Βαριέσαι να φροντίσεις το παιδί και θέλεις να βγείς για καφέ? Και εγώ στην θέση σου το ίδιο θα έκανα!");
+                    "Βαριέσαι να φροντίσεις το παιδί και θέλεις να βγείς για καφέ; Και εγώ στην θέση σου το ίδιο θα έκανα!");
             RequestDonation rd1 = new RequestDonation(milk, 5.0);
             RequestDonation rd2 = new RequestDonation(sugar, 10.0);
             RequestDonation rd3 = new RequestDonation(rice, 4.0);
@@ -77,6 +77,7 @@ public class Main {
                                 case 1:
                                     System.out.print("Από πόσα μέλη αποτελείται η οικογένεια σας; ");
                                     int noPersons = sc.nextInt();
+                                    if(noPersons<0) throw new WrongInput(); 
                                     Beneficiary newBeneficiary = new Beneficiary(name, phoneNumber, noPersons);
                                     organization.insertBeneficiary(newBeneficiary);
                                     System.out.println("Εγγραφήκατε επιτυχώς!");

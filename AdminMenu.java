@@ -3,7 +3,7 @@ import java.util.InputMismatchException;
 
 public class AdminMenu {
 
-    public boolean AdminMenu(Scanner sc, Admin admin, Organization org){
+    public boolean adminMenu(Scanner sc, Admin admin, Organization org){
         try{
             System.out.println(" ================= KENTRIKO MENOY ==================");
             System.out.println("1. View");
@@ -33,15 +33,7 @@ public class AdminMenu {
                     System.out.print("Bye bye!");
                     System.exit(0);
                 default:
-                    System.out.println(" ================= KENTRIKO MENOY ==================");
-                    System.out.println("1. View");
-                    System.out.println("2. Monitor Organization");
-                    // =================================
-                    System.out.println("3. Log Out");
-                    System.out.println("4. Exit");
-                    // =================================
-                    System.out.print("Επιλογή? ");
-                    System.out.println("=======================================");
+                   System.out.println("Λάθος είσοδος. Ξαναπροσπαθήστε!");
 
             }
 
@@ -55,6 +47,7 @@ public class AdminMenu {
 
         return true;
     }
+    
     private int AdminChoice(Scanner sc) throws InputMismatchException, WrongInput{
         int Choice;
 
@@ -125,22 +118,24 @@ public class AdminMenu {
                     int menuChoice = sc.nextInt();
                     if (menuChoice==4) break; // BACK
                     System.out.println(org.listBeneficiary());
-                    System.out.println("Επιλογή εποφελούμενου ");
-                    int beneficiaryChoice = sc.nextInt() - 1;
+                    System.out.print("Επιλογή εποφελούμενου ");
+                    int beneficiaryChoice = sc.nextInt();
                     if(beneficiaryChoice<0 || beneficiaryChoice > org.beneficiaryListSize())
                         throw new WrongInput();
+                    beneficiaryChoice--;
                     switch(menuChoice){
                         case 1: // Τρέχουσα κατάσταση προιόντων που έχει λάβει
                             System.out.println(org.getBeneficiaryList().get(beneficiaryChoice).getRequestsList().monitor());
                             break;
                         case 2: // reset ReceivedList
-                            System.out.println("Είστε σίγουροι ότι θέλετε να διαγράψετε όλα τα αγαθά που έχει λάβει ο εποφελούμενος;(y/n) ");
+                            System.out.print("Είστε σίγουροι ότι θέλετε να διαγράψετε όλα τα αγαθά που έχει λάβει ο εποφελούμενος;(y/n) ");
                             String s = sc.next();
                             if(!(s.equalsIgnoreCase("n") || s.equalsIgnoreCase("y")))
                                 throw new WrongInput();
-                            if(s.equalsIgnoreCase("y"))
+                            if(s.equalsIgnoreCase("y")){
                                 org.getBeneficiaryList().get(beneficiaryChoice).resetReceivedList();
-                            System.out.println("Η λίστα διαγράφτηκε επιτυχώς");
+                                System.out.println("Η λίστα διαγράφτηκε επιτυχώς");
+                            }
                             break;
                         case 3: // Delete a Beneficiary
                             System.out.print("ΠΡΟΣΟΧΗ: Θα θέλατε να διαγράψετε τον συγκεκρτιμένο Εποφελούμενο απο τον οργανισμό;(y/n) ");
@@ -163,7 +158,7 @@ public class AdminMenu {
                     if (menuChoice==3) break; // BACK
                     System.out.println(org.listDonator());
                     System.out.print("Επιλογή δωρητή ");
-                    int donatorChoice = sc.nextInt() - 1;
+                    int donatorChoice = sc.nextInt();
                     if(donatorChoice<0 || donatorChoice > org.donatorListSize())
                         throw new WrongInput();
 
@@ -187,15 +182,16 @@ public class AdminMenu {
                     String answer = sc.next();
                     if (!(answer.equalsIgnoreCase("n") || answer.equalsIgnoreCase("y")))
                         throw new WrongInput();
-                    if(answer.equalsIgnoreCase("y"))
+                    if(answer.equalsIgnoreCase("y")){
                         for(int i=0; i< org.beneficiaryListSize(); i++)
                             org.getBeneficiaryList().get(i).resetReceivedList();
-                    System.out.println("Η διαγραφή εκτελέσθηκε επιτυχώς!");
+                        System.out.println("Η διαγραφή εκτελέσθηκε επιτυχώς!");
+                    }
                     break;
                 case 4:
                     break; // terminates MONITOR ORGANIZATION method
                 default:
-                    System.err.println("Λάθος επιλογή. Ξαναπροσπαθήστε!");
+                    System.out.println("Λάθος επιλογή. Ξαναπροσπαθήστε!");
             }// end switch-choice
         }catch (InputMismatchException e){
             System.out.println(e);

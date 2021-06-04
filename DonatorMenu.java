@@ -31,7 +31,7 @@ public class DonatorMenu {
                         System.out.println("To αγαθό προστέθηκε επιτυχώς στην λίστα σας");
                     }
                     break;
-                case 2:
+                case 2: // Service
                     System.out.println(organization.listServices());
                     System.out.print("Επιλογή; ");
                     int serviceChoice = sc.nextInt();
@@ -192,7 +192,7 @@ public class DonatorMenu {
         } catch (TheOrganizationDoesNotSupportTheEntity theOrganizationDoesNotSupportTheEntity) {
             System.out.println(theOrganizationDoesNotSupportTheEntity);
         } catch (TheEntityDoesNotExistInrdEntities theEntityDoesNotExistInrdEntities) {
-            theEntityDoesNotExistInrdEntities.printStackTrace();
+            System.out.println(theEntityDoesNotExistInrdEntities);
         }
         return true;
     }

@@ -7,9 +7,9 @@ public class RequestDonationList {
         return rdEntities;
     }
 
-    public RequestDonation get(int elem) throws TheEntityDoesNotExistInrdEntities{
+    public RequestDonation get(int ID) throws TheEntityDoesNotExistInrdEntities{
         for(int i=0; i< rdEntities.size(); i++)
-            if(rdEntities.get(i).getEntity().getID() == elem)
+            if(rdEntities.get(i).getEntity().getID() == ID)
                 return rdEntities.get(i);
 
             throw new TheEntityDoesNotExistInrdEntities();
@@ -35,12 +35,12 @@ public class RequestDonationList {
                 rdEntities.remove(i);
                 System.out.println("Το αγαθό αφαιρέθηκε επιτυχώς");
                 return true;
-            }
+            } 
         throw new TheEntityDoesNotExistInrdEntities();
     }
 
-    public void modify(int elem, double quantity){
-        rdEntities.get(elem).setQuantity(quantity);
+    public void modify(int index, double quantity){
+        rdEntities.get(index).setQuantity(quantity);
         System.out.println("Η ποσότητα τροποποήθηκε επιτυχώς");
     }
 
