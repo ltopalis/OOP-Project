@@ -122,11 +122,11 @@ public class AdminMenu {
                     System.out.println("3. Διαγραφή εποφελούμενου");
                     System.out.println("4. Πίσω");
                     System.out.print("Επιλογη; ");
-                    int menuChoice = sc.nextInt() - 1;
+                    int menuChoice = sc.nextInt();
                     if (menuChoice==4) break; // BACK
                     System.out.println(org.listBeneficiary());
                     System.out.println("Επιλογή εποφελούμενου ");
-                    int beneficiaryChoice = sc.nextInt();
+                    int beneficiaryChoice = sc.nextInt() - 1;
                     if(beneficiaryChoice<0 || beneficiaryChoice > org.beneficiaryListSize())
                         throw new WrongInput();
                     switch(menuChoice){
