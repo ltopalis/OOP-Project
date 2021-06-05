@@ -17,17 +17,18 @@ public class BeneficiaryMenu {
                     int materialChoice = sc.nextInt();
                     if(materialChoice > organization.materialListSize() || materialChoice < 0)
                         throw new WrongInput();
-                    System.out.println(organization.getMaterialList().getRdEntities().get(materialChoice-1));
+                    materialChoice--;
+                    System.out.println(organization.getMaterialList().getRdEntities().get(materialChoice));
                     System.out.print("Θα σας ενδιέφερε να το αποκτήσετε;(y/n) ");
                     String s = sc.next();
                     if(!(s.equalsIgnoreCase("n") || s.equalsIgnoreCase("y")))
                         throw new WrongInput();
                     if(s.equals("y")) {
-                        System.out.println("Πόση ποσότητα επιθυμείτε να λάβετε; ");
+                        System.out.print("Πόση ποσότητα επιθυμείτε να λάβετε; ");
                         double quantity = sc.nextDouble();
                         if (quantity < 0)
                             throw new WrongInput();
-                        beneficiary.addRequestList(new RequestDonation(organization.getMaterialList().getRdEntities().get(materialChoice - 1).getEntity(), quantity), organization);
+                        beneficiary.addRequestList(new RequestDonation(organization.getMaterialList().getRdEntities().get(materialChoice).getEntity(), quantity), organization);
                         System.out.println("To αγαθό προστέθηκε επιτυχώς στην λίστα σας");
                     }
                     break;
@@ -63,11 +64,11 @@ public class BeneficiaryMenu {
         } catch (TheOrganizationDoesNotSupportTheQuantity theOrganizationDoesNotSupportTheQuantity) {
             theOrganizationDoesNotSupportTheQuantity.printStackTrace();
         } catch (WrongQuantity wrongQuantity) {
-            wrongQuantity.printStackTrace();
+            System.out.println(wrongQuantity);
         } catch (TheOrganizationDoesNotSupportTheEntity theOrganizationDoesNotSupportTheEntity) {
-            theOrganizationDoesNotSupportTheEntity.printStackTrace();
+            System.out.println(theOrganizationDoesNotSupportTheEntity);
         } catch (TheEntityDoesNotExistInrdEntities theEntityDoesNotExistInrdEntities) {
-            theEntityDoesNotExistInrdEntities.printStackTrace();
+            System.out.println(theEntityDoesNotExistInrdEntities);
         }
     }
 
@@ -120,8 +121,8 @@ public class BeneficiaryMenu {
                 case 3:
                     System.out.print("Είστε σίγουροι ότι θέλετε να υποβάλετε τις παροχές σας;(y/n) ");
                     s = sc.next();
-                    if(!(s.equals("n") || s.equals("y"))) throw new WrongInput();
-                    if(s.equals("y")) {
+                    if(!(s.equalsIgnoreCase("n") || s.equalsIgnoreCase("y"))) throw new WrongInput();
+                    if(s.equalsIgnoreCase("y")) {
                         for(int i=beneficiary.getRequestsList().getRdEntities().size()-1; i>=0; i--)
                             beneficiary.commitRequestList(beneficiary.getRequestsList().getRdEntities().get(i), organization);
                         System.out.println("Οι παροχές υποβλήθηκαν με επιτυχία");
@@ -151,6 +152,7 @@ public class BeneficiaryMenu {
 
     public boolean beneficiaryMenu(Scanner sc, Beneficiary beneficiary, Organization organization){
         try {
+            System.out.println("-".repeat(50));
             System.out.println("1. Προσθέστε επιθυμητό είδος");
             System.out.println("2. Δείτε τις προσφορές σας");
             System.out.println("3. Υποβάλετε τις προσφορές σας");
@@ -168,9 +170,9 @@ public class BeneficiaryMenu {
                     break;
                 case  3:
                     System.out.print("Είστε σίγουροι ότι θέλετε να υποβάλετε τις παροχές σας;(y/n) ");
-                    String s = sc.nextLine();
-                    if(!(s.equals("n") || s.equals("y"))) throw new WrongInput();
-                    if(s.equals("y")) {
+                    String s = sc.next();
+                    if(!(s.equalsIgnoreCase("n") || s.equalsIgnoreCase("y"))) throw new WrongInput();
+                    if(s.equalsIgnoreCase("y")) {
                         for(int i=beneficiary.getRequestsList().getRdEntities().size()-1; i>=0; i--)
                             beneficiary.commitRequestList(beneficiary.getRequestsList().getRdEntities().get(i), organization);
                         System.out.println("Οι παροχές υποβλήθηκαν με επιτυχία");
