@@ -8,6 +8,8 @@ public class Main {
         try (Scanner sc = new Scanner(System.in)){
             Menu menu = new Menu();
             Organization organization = new Organization("Let's get physical");
+
+
             Material milk = new Material(45, "Γάλα", "Πλήρες γάλα Μπαρμπαμπρίλιος", 1.0,2.0, 4.0);
             Material sugar = new Material(52, "Ζάχαρη", "Κρυσταλική ζάχαρη", 1.0, 1.0, 2.0);
             Material rice = new Material(71, "Ρύζι", "Καρολίνα του Μονακό", 1.0, 2.0, 6.0);
@@ -16,16 +18,22 @@ public class Main {
             Service NurserySupport = new Service(21, "Νοσηλευτική βοήθεια", "Η γιατρέσσα Εύη στο σπίτι σας");
             Service BabySitting = new Service(35, "Βρεφική φροντίδα    ",
                     "Βαριέσαι να φροντίσεις το παιδί και θέλεις να βγείς για καφέ; Και εγώ στην θέση σου το ίδιο θα έκανα!");
+
+
             RequestDonation rd1 = new RequestDonation(milk, 5.0);
             RequestDonation rd2 = new RequestDonation(sugar, 10.0);
             RequestDonation rd3 = new RequestDonation(rice, 4.0);
             RequestDonation rd4 = new RequestDonation(MedicalSupport, 10.30);
             RequestDonation rd5 = new RequestDonation(NurserySupport, 52.2);
             RequestDonation rd6 = new RequestDonation(BabySitting, 3.50);
+
+
             Admin admin = new Admin("Κώστας", "445236547");
             Beneficiary beneficiary1 = new Beneficiary("Γιώργος", "45213665", 4);
             Beneficiary beneficiary2 = new Beneficiary("Γιάννης", "69852112", 2);
             Donator donator = new Donator("Lucas", "44536852");
+
+
             organization.addEntity(milk);
             organization.addEntity(sugar);
             organization.addEntity(rice);
@@ -42,8 +50,12 @@ public class Main {
             organization.insertBeneficiary(beneficiary1);
             organization.insertBeneficiary(beneficiary2);
             organization.insertDonator(donator);
+
+
             sc.useLocale(Locale.US);
             sc.useDelimiter("[\n\t]");
+
+
             String phoneNumber = "";
             User user;
 
